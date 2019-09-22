@@ -1,0 +1,63 @@
+<div class="demo">
+  <div class="list">
+    <h1>Demo List</h1>
+    <table mat-table [dataSource]="demoList" class="mat-elevation-z8">
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+
+      <!-- list Column -->
+      <ng-container matColumnDef="list">
+        <th mat-header-cell *matHeaderCellDef> List </th>
+        <td mat-cell *matCellDef="let element"> {{element.list}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button  mat-raised-button color="primary" (click)="editClick(element)" class="m-l-5">Edit</button>
+          <button mat-button  mat-raised-button color="warn" (click)="deleteDemo(element._id)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+    </table>
+  </div>
+
+
+  <div>
+    <form [formGroup]="createFrom" (ngSubmit)="onSubmit(createFrom.value)">
+      <h1 *ngIf="editData._id">Update</h1>
+      <h1 *ngIf="!editData._id">Create</h1>
+      <mat-form-field class="example-full-width">
+        <input formControlName="name" matInput placeholder="Name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" matNativeControl>
+          <mat-option value="Movies">Movies</mat-option>
+          <mat-option value="Food">Food</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input formControlName="list" matInput placeholder="Favourite list">
+      </mat-form-field>
+
+      <button *ngIf="!editData._id" type="submit" [disabled]="!createFrom.valid" mat-raised-button mat-button color="primary">Create</button>
+      <button *ngIf="editData._id" type="submit" [disabled]="!createFrom.valid"  mat-raised-button mat-button color="primary">Update</button>
+
+    </form>
+  </div>
+</div>
